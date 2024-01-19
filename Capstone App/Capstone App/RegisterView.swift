@@ -1,9 +1,12 @@
 import SwiftUI
 
 struct RegisterView: View {
+    @State private var firstName: String = ""
+    @State private var lastName: String = ""
     @State private var email: String = ""
     @State private var username: String = ""
     @State private var password: String = ""
+    @State private var confirmPassword: String = ""
 
     var body: some View {
         VStack(spacing: 30) {
@@ -17,6 +20,18 @@ struct RegisterView: View {
                 .fontWeight(.medium)
                 .foregroundColor(.secondary)
 
+            TextField("First Name", text: $email)
+                .padding()
+                .background(Color(.systemGray6))
+                .cornerRadius(10)
+                .padding(.horizontal, 20)
+            
+            TextField("Last Name", text: $email)
+                .padding()
+                .background(Color(.systemGray6))
+                .cornerRadius(10)
+                .padding(.horizontal, 20)
+            
             TextField("Email", text: $email)
                 .padding()
                 .background(Color(.systemGray6))
@@ -35,6 +50,12 @@ struct RegisterView: View {
                 .cornerRadius(10)
                 .padding(.horizontal, 20)
 
+            SecureField("Confirm Password", text: $password)
+                .padding()
+                .background(Color(.systemGray6))
+                .cornerRadius(10)
+                .padding(.horizontal, 20)
+            
             Button(action: {
                 // This is where we'll handle register action
             }) {
