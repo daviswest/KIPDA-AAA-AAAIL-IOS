@@ -1,17 +1,16 @@
-//
-//  Capstone_AppApp.swift
-//  Capstone App
-//
-//  Created by Davis West on 1/18/24.
-//
-
 import SwiftUI
 
 @main
 struct Capstone_AppApp: App {
+    @StateObject var languageSettings = LanguageSettings()
+
     var body: some Scene {
         WindowGroup {
-            WelcomeView()
+            if UserDefaults.standard.bool(forKey: "languageSet") {
+                WelcomeView().environmentObject(languageSettings)
+            } else {
+                SetLanguageView().environmentObject(languageSettings)
+            }
         }
     }
 }
