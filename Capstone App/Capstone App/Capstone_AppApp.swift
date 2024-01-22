@@ -6,7 +6,7 @@ struct Capstone_AppApp: App {
 
     var body: some Scene {
         WindowGroup {
-            if UserDefaults.standard.bool(forKey: "languageSet") {
+            if languageSettings.selectedLanguage != nil {
                 WelcomeView().environmentObject(languageSettings)
             } else {
                 SetLanguageView().environmentObject(languageSettings)

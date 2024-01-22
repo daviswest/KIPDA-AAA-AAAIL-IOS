@@ -68,9 +68,6 @@ struct WelcomeView: View {
                     }
                 })
                 .padding()
-                .sheet(isPresented: $navigateToHome) {
-                    HomeView()
-                }
             }
         }
     }

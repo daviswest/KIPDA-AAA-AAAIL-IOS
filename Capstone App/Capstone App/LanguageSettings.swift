@@ -2,18 +2,21 @@ import SwiftUI
 
 // Defines a class 'LanguageSettings' which will observe and respond to changes in language settings. This is necessary so the app doesn't have to restart every time the language is changed.
 class LanguageSettings: ObservableObject {
-
-    // A published property that stores the currently selected language.
-    // It uses UserDefaults to persist the language setting and defaults to English ('en') if no value is stored.
-    @Published var selectedLanguage: String = UserDefaults.standard.string(forKey: "selectedLanguage") ?? "en" {
+    @Published var selectedLanguage: String? {
         didSet {
-            // Whenever the selectedLanguage changes, update the UserDefaults and set the new language for the app.
-            UserDefaults.standard.set(selectedLanguage, forKey: "selectedLanguage")
-            UserDefaults.standard.set(true, forKey: "languageSet")
-            Bundle.setLanguage(selectedLanguage)
+            if let selectedLanguage = selectedLanguage {
+                UserDefaults.standard.set(selectedLanguage, forKey: "selectedLanguage")
+                Bundle.setLanguage(selectedLanguage)
+            }
         }
     }
+
+    init() {
+        // Fetch the selected language from UserDefaults. If not found, don't set a default.
+        self.selectedLanguage = UserDefaults.standard.string(forKey: "selectedLanguage")
+    }
 }
+
 
 // Extending the Bundle class to support dynamic language switching.
 extension Bundle {
