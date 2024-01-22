@@ -1,7 +1,11 @@
 import SwiftUI
 
 struct WelcomeView: View {
+    @EnvironmentObject var languageSettings: LanguageSettings
+    @Environment(\.presentationMode) var presentationMode
     @State private var isTapped = false
+    @State private var navigateToHome = false
+    @State private var navigateToSetLanguage = false
     
     var body: some View {
         NavigationView {
@@ -10,14 +14,14 @@ struct WelcomeView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 200, height: 300)
-
-                Text("Welcome to KIPDA Notify")
+                
+                Text(NSLocalizedString("welcome_message", comment: "Welcome message"))
                     .font(.title2)
                     .fontWeight(.bold)
                     .padding(.bottom, 50)
-
+                
                 NavigationLink(destination: LoginView()) {
-                    Text("Login")
+                    Text(NSLocalizedString("login_button", comment: "login"))
                         .font(.headline)
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .padding()
@@ -33,9 +37,9 @@ struct WelcomeView: View {
                         self.isTapped.toggle()
                     }
                 })
-
+                
                 NavigationLink(destination: RegisterView()) {
-                    Text("Register")
+                    Text(NSLocalizedString("register_button", comment: "register"))
                         .font(.headline)
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .padding()
@@ -51,9 +55,23 @@ struct WelcomeView: View {
                         self.isTapped.toggle()
                     }
                 })
-                Spacer()
+                
+                
+                NavigationLink(destination: HomeView().navigationBarBackButtonHidden(true)) {
+                    Text(NSLocalizedString("continue_guest", comment: "continue as guest"))
+                        .opacity(isTapped ? 0.5 : 1.0)
+                }
+                .simultaneousGesture(TapGesture().onEnded { _ in
+                    self.isTapped.toggle()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        self.isTapped.toggle()
+                    }
+                })
+                .padding()
+                .sheet(isPresented: $navigateToHome) {
+                    HomeView()
+                }
             }
-            .padding()
         }
     }
 }

@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  Capstone App
-//
-//  Created by Davis West on 1/18/24.
-//
-
 import SwiftUI
 
 struct ContentView: View {

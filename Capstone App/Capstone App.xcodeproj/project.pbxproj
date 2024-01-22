@@ -17,6 +17,10 @@
 		DCB060B42B59E49600F17904 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB060B32B59E49600F17904 /* WelcomeView.swift */; };
 		DCB060B62B59E4A900F17904 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB060B52B59E4A900F17904 /* LoginView.swift */; };
 		DCB060B82B59E4BC00F17904 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB060B72B59E4BC00F17904 /* RegisterView.swift */; };
+		DCF53F6E2B5EC19500EF232C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCF53F702B5EC19500EF232C /* Localizable.strings */; };
+		DCF53F742B5EC45200EF232C /* LanguageSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF53F732B5EC45200EF232C /* LanguageSettings.swift */; };
+		DCF53F762B5EC52500EF232C /* SetLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF53F752B5EC52500EF232C /* SetLanguageView.swift */; };
+		DCF53F782B5ECEE100EF232C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF53F772B5ECEE100EF232C /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +54,12 @@
 		DCB060B32B59E49600F17904 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		DCB060B52B59E4A900F17904 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DCB060B72B59E4BC00F17904 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		DCF53F6F2B5EC19500EF232C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DCF53F712B5EC31500EF232C /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DCF53F722B5EC32800EF232C /* so */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = so; path = so.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DCF53F732B5EC45200EF232C /* LanguageSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettings.swift; sourceTree = "<group>"; };
+		DCF53F752B5EC52500EF232C /* SetLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetLanguageView.swift; sourceTree = "<group>"; };
+		DCF53F772B5ECEE100EF232C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +111,11 @@
 			isa = PBXGroup;
 			children = (
 				DCB060892B59E17D00F17904 /* Capstone_AppApp.swift */,
+				DCF53F732B5EC45200EF232C /* LanguageSettings.swift */,
+				DCF53F752B5EC52500EF232C /* SetLanguageView.swift */,
 				DCB060B32B59E49600F17904 /* WelcomeView.swift */,
+				DCF53F772B5ECEE100EF232C /* HomeView.swift */,
+				DCF53F702B5EC19500EF232C /* Localizable.strings */,
 				DCB060B52B59E4A900F17904 /* LoginView.swift */,
 				DCB060B72B59E4BC00F17904 /* RegisterView.swift */,
 				DCB0608B2B59E17D00F17904 /* ContentView.swift */,
@@ -222,6 +236,8 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
+				so,
 			);
 			mainGroup = DCB0607D2B59E17D00F17904;
 			productRefGroup = DCB060872B59E17D00F17904 /* Products */;
@@ -241,6 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCB060912B59E17F00F17904 /* Preview Assets.xcassets in Resources */,
+				DCF53F6E2B5EC19500EF232C /* Localizable.strings in Resources */,
 				DCB0608E2B59E17F00F17904 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,9 +283,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCF53F742B5EC45200EF232C /* LanguageSettings.swift in Sources */,
 				DCB0608C2B59E17D00F17904 /* ContentView.swift in Sources */,
 				DCB060B82B59E4BC00F17904 /* RegisterView.swift in Sources */,
 				DCB060B42B59E49600F17904 /* WelcomeView.swift in Sources */,
+				DCF53F762B5EC52500EF232C /* SetLanguageView.swift in Sources */,
+				DCF53F782B5ECEE100EF232C /* HomeView.swift in Sources */,
 				DCB060B62B59E4A900F17904 /* LoginView.swift in Sources */,
 				DCB0608A2B59E17D00F17904 /* Capstone_AppApp.swift in Sources */,
 			);
@@ -306,12 +326,26 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		DCF53F702B5EC19500EF232C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DCF53F6F2B5EC19500EF232C /* en */,
+				DCF53F712B5EC31500EF232C /* ar */,
+				DCF53F722B5EC32800EF232C /* so */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		DCB060A82B59E18000F17904 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -375,6 +409,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
