@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		DCB0608A2B59E17D00F17904 /* Capstone_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB060892B59E17D00F17904 /* Capstone_AppApp.swift */; };
-		DCB0608C2B59E17D00F17904 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB0608B2B59E17D00F17904 /* ContentView.swift */; };
 		DCB0608E2B59E17F00F17904 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCB0608D2B59E17F00F17904 /* Assets.xcassets */; };
 		DCB060912B59E17F00F17904 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCB060902B59E17F00F17904 /* Preview Assets.xcassets */; };
 		DCB0609B2B59E18000F17904 /* Capstone_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB0609A2B59E18000F17904 /* Capstone_AppTests.swift */; };
@@ -43,7 +42,6 @@
 /* Begin PBXFileReference section */
 		DCB060862B59E17D00F17904 /* Capstone App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Capstone App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCB060892B59E17D00F17904 /* Capstone_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Capstone_AppApp.swift; sourceTree = "<group>"; };
-		DCB0608B2B59E17D00F17904 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DCB0608D2B59E17F00F17904 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DCB060902B59E17F00F17904 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DCB060962B59E18000F17904 /* Capstone AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Capstone AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,7 +116,6 @@
 				DCF53F702B5EC19500EF232C /* Localizable.strings */,
 				DCB060B52B59E4A900F17904 /* LoginView.swift */,
 				DCB060B72B59E4BC00F17904 /* RegisterView.swift */,
-				DCB0608B2B59E17D00F17904 /* ContentView.swift */,
 				DCB0608D2B59E17F00F17904 /* Assets.xcassets */,
 				DCB0608F2B59E17F00F17904 /* Preview Content */,
 			);
@@ -284,7 +281,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCF53F742B5EC45200EF232C /* LanguageSettings.swift in Sources */,
-				DCB0608C2B59E17D00F17904 /* ContentView.swift in Sources */,
 				DCB060B82B59E4BC00F17904 /* RegisterView.swift in Sources */,
 				DCB060B42B59E49600F17904 /* WelcomeView.swift in Sources */,
 				DCF53F762B5EC52500EF232C /* SetLanguageView.swift in Sources */,
