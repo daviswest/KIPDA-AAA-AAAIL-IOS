@@ -57,7 +57,7 @@ struct WelcomeView: View {
                 })
                 
                 
-                NavigationLink(destination: HomeView().navigationBarBackButtonHidden(true)) {
+                NavigationLink(destination: MainTabView().navigationBarBackButtonHidden(true)) {
                     Text(NSLocalizedString("continue_guest", comment: "continue as guest"))
                         .opacity(isTapped ? 0.5 : 1.0)
                 }
@@ -69,6 +69,7 @@ struct WelcomeView: View {
                 })
                 .padding()
             }
+            .navigationBarHidden(true)
         }
     }
 }
