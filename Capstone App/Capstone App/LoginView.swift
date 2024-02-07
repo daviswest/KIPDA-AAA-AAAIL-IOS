@@ -9,30 +9,32 @@ struct LoginView: View {
     @State private var errorMessage: String?
 
     var body: some View {
-        VStack(spacing: 20) {
+        ScrollView{
             Text("Welcome Back")
                 .font(.largeTitle)
                 .fontWeight(.semibold)
                 .padding(.top, 60)
-                
+            
             Text("Please login to continue")
                 .font(.headline)
                 .fontWeight(.medium)
                 .foregroundColor(.secondary)
                 .padding(.bottom, 20)
-            
-            Group {
-                TextField("Email", text: $email)
-                    .autocapitalization(.none)
-                    .keyboardType(.emailAddress)
-                
-                PasswordField(placeholder: "Password", password: $password)
+        
+            VStack(spacing: 20) {
+                Group {
+                    TextField("Email", text: $email)
+                        .autocapitalization(.none)
+                        .keyboardType(.emailAddress)
+                    
+                    PasswordField(placeholder: "Password", password: $password)
+                }
+                .padding()
+                .background(Color(.systemGray6))
+                .cornerRadius(10)
+                .padding(.horizontal, 20)
             }
-            .padding()
-            .background(Color(.systemGray6))
-            .cornerRadius(10)
-            .padding(.horizontal, 20)
-            
+        }
             if let errorMessage = errorMessage {
                 Text(errorMessage)
                     .font(.caption)
@@ -50,23 +52,21 @@ struct LoginView: View {
                     .foregroundColor(.white)
                     .padding()
                     .frame(minWidth: 0, maxWidth: .infinity)
-                    .background(Color.blue)
+                    .background(Color(red: 0/255, green: 129/255, blue: 246/255))
                     .cornerRadius(10)
             }
             .padding(.horizontal, 20)
             Spacer()
-        }
         .navigationBarTitle("", displayMode: .inline)
         .navigationBarBackButtonHidden(false)
     }
 
     func performLogin() {
-        authManager.signIn(email: email, password: password) { success, error in
+        authManager.signIn(email: email, password: password) { success, errorMessage in
             DispatchQueue.main.async {
                 if success {
-                    self.errorMessage = nil
                 } else {
-                    self.errorMessage = error ?? "Incorrect email and/or password."
+                    self.errorMessage = errorMessage
                 }
             }
         }
