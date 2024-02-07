@@ -2,6 +2,7 @@ import SwiftUI
 
 struct WelcomeView: View {
     @EnvironmentObject var languageSettings: LanguageSettings
+    @EnvironmentObject var authManager: AuthenticationManager
     @Environment(\.presentationMode) var presentationMode
     @State private var isTapped = false
     @State private var navigateToHome = false
@@ -61,7 +62,8 @@ struct WelcomeView: View {
                     Text(NSLocalizedString("continue_guest", comment: "continue as guest"))
                         .opacity(isTapped ? 0.5 : 1.0)
                 }
-                .simultaneousGesture(TapGesture().onEnded { _ in
+                .simultaneousGesture(TapGesture().onEnded {
+                    authManager.continueAsGuest()
                     self.isTapped.toggle()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         self.isTapped.toggle()
