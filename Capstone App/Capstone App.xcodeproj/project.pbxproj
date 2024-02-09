@@ -116,6 +116,7 @@
 		DC3FE6A72B73E100002E9992 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				DCB060892B59E17D00F17904 /* Capstone_AppApp.swift */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -144,7 +145,6 @@
 			isa = PBXGroup;
 			children = (
 				DC3FE6A72B73E100002E9992 /* Preview Content */,
-				DCB060892B59E17D00F17904 /* Capstone_AppApp.swift */,
 				DCF53F732B5EC45200EF232C /* LanguageSettings.swift */,
 				DCF53F752B5EC52500EF232C /* SetLanguageView.swift */,
 				DC8AF1C12B7157BD0013CC6C /* SettingsView.swift */,
