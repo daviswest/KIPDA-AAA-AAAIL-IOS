@@ -22,29 +22,6 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text("Accessibility Settings").fontWeight(.bold),
-                        footer: Text("Customize your experience to suit your needs.")) {
-                    Toggle(isOn: $isLargeTextEnabled) {
-                        Text("Larger Text")
-                    }
-                    
-                    if isLargeTextEnabled {
-                        Picker("Text Size", selection: $selectedTextSize) {
-                            ForEach(TextSize.allCases) { size in
-                                Text(size.rawValue).tag(size)
-                            }
-                        }
-                        .pickerStyle(MenuPickerStyle())
-                    }
-                    
-                    Toggle(isOn: $isVoiceOverEnabled) {
-                        Text("VoiceOver Guidance")
-                    }
-                    Toggle(isOn: $isHighContrastEnabled) {
-                        Text("High Contrast Mode")
-                    }
-                }
-
                 Section(header: Text("General Settings").fontWeight(.bold),
                         footer: Text("General settings include preferences for app behavior.")) {
                     Toggle(isOn: $notificationsEnabled) {
@@ -84,6 +61,7 @@ struct SettingsView: View {
             }
             .listStyle(GroupedListStyle())
             .navigationBarTitle("Settings")
+            .scrollContentBackground(.hidden)
         }
     }
 }
