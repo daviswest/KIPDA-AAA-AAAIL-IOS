@@ -71,9 +71,3 @@ struct NotificationDetailView: View {
         }
     }
 }
-
-struct NotificationDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        NotificationDetailView(notification: NotificationItem(title: "Sample Notification", message: "This is a detailed view of the notification, providing more information to the user.", date: Date(), type: .community, priority: .high))
-    }
-}
