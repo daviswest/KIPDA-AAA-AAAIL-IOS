@@ -1,18 +1,73 @@
 import SwiftUI
 
+struct NotificationItem: Identifiable {
+    var id = UUID()
+    var title: String
+    var message: String
+    var date: Date
+    var type: NotificationType
+    var priority: NotificationPriority
+}
+
+enum NotificationType {
+    case weather, community, health
+}
+
+enum NotificationPriority {
+    case high, medium, low
+}
+
 struct NotificationRow: View {
     var item: NotificationItem
     
+    private var icon: Image {
+        switch item.type {
+        case .weather:
+            return Image(systemName: "cloud.rain.fill")
+        case .community:
+            return Image(systemName: "building.2.fill")
+        case .health:
+            return Image(systemName: "cross.fill")
+        }
+    }
+    
+    private var priorityIndicator: some View {
+        Group {
+            switch item.priority {
+            case .high:
+                Text("!")
+                    .font(.headline)
+                    .foregroundColor(.red)
+            case .medium:
+                Text("!")
+                    .font(.headline)
+                    .foregroundColor(.yellow)
+            case .low:
+                EmptyView()
+            }
+        }
+    }
+
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            Text(item.title)
-                .font(.headline)
-                .accessibilityAddTraits(.isHeader)
-            Text(item.message)
-                .font(.subheadline)
-            Text(item.date, style: .date)
-                .font(.caption)
+        HStack(spacing: 10) {
+            icon
                 .foregroundColor(.secondary)
+            
+            VStack(alignment: .leading, spacing: 5) {
+                HStack {
+                    Text(item.title)
+                        .font(.headline)
+                        .accessibilityAddTraits(.isHeader)
+                    priorityIndicator
+                }
+                
+                Text(item.message)
+                    .font(.subheadline)
+                Text(item.date, style: .date)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(item.title), \(item.message), \(item.date, style: .date)")
@@ -20,11 +75,10 @@ struct NotificationRow: View {
 }
 
 struct HomeView: View {
-    //Sample notifications for demonstration
     private let notifications = [
-        NotificationItem(title: "Weather Alert", message: "Severe thunderstorm warning in your area. Take precautions.", date: Date()),
-        NotificationItem(title: "Community Update", message: "Local community center closed today due to maintenance.", date: Date().addingTimeInterval(-86400)),
-        NotificationItem(title: "Health Advisory", message: "Flu season is here. Consider getting vaccinated.", date: Date().addingTimeInterval(-172800))
+        NotificationItem(title: "Weather Alert", message: "Severe thunderstorm warning in your area. Take precautions.", date: Date(), type: .weather, priority: .high),
+        NotificationItem(title: "Community Update", message: "Local community center closed today due to maintenance.", date: Date().addingTimeInterval(-86400), type: .community, priority: .medium),
+        NotificationItem(title: "Health Advisory", message: "Flu season is here. Consider getting vaccinated.", date: Date().addingTimeInterval(-172800), type: .health, priority: .low)
     ]
     
     var body: some View {
@@ -34,9 +88,11 @@ struct HomeView: View {
                     Image("kipda_logo")
                         .resizable()
                         .scaledToFit()
-                        .frame(height: 50)
+                        .frame(height: 60)
                         .padding(.leading, 10)
-                    
+                        .padding(.top, 0)
+                        .padding(.bottom, 0)
+
                     Spacer()
                 }
                 Divider()
@@ -60,3 +116,4 @@ struct HomeView_Previews: PreviewProvider {
         HomeView()
     }
 }
+
