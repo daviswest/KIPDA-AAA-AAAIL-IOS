@@ -16,53 +16,53 @@ struct SettingsView: View {
     @State private var selectedTextSize: TextSize = .medium
     @State private var isVoiceOverEnabled = false
     @State private var isHighContrastEnabled = false
-    @State private var notificationsEnabled = false
-    @State private var isDarkModeEnabled = false
+    @State private var dataSaveEnabled = false
+    @State private var allowLocation = false
+    @State private var allowNotifications = false
     
     var body: some View {
         NavigationView {
-            List {
-                Section(header: Text("General Settings").fontWeight(.bold),
-                        footer: Text("General settings include preferences for app behavior.")) {
-                    Toggle(isOn: $notificationsEnabled) {
-                        Text("Enable Notifications")
-                    }
-                    Toggle(isOn: $isDarkModeEnabled) {
-                        Text("Dark Mode")
-                    }
-                }
-                
-                Section(header: Text("Account").fontWeight(.bold),
-                        footer: Text("Manage your account settings.")) {
-                    NavigationLink(destination: Text("Profile Details")) {
-                        Text("Profile")
-                    }
-                    NavigationLink(destination: Text("Security Settings")) {
-                        Text("Security")
-                    }
-                }
-                
-                Section {
-                    Button(action: {
-                        authManager.signOut()
-                    }) {
-                        HStack {
-                            Spacer()
-                            Text("Sign Out")
-                                .foregroundColor(.white)
-                                .fontWeight(.bold)
-                            Spacer()
+            VStack {
+                List {
+                    Section(header: Text("General Settings").fontWeight(.bold),
+                            footer: Text("General settings include preferences for app behavior.")) {
+                        Toggle(isOn: $dataSaveEnabled) {
+                            Text("Enable Data Saving")
+                        }
+                        Toggle(isOn: $allowLocation) {
+                            Text("Enable Location Services")
+                        }
+                        Toggle(isOn: $allowNotifications) {
+                            Text("Enable Notifications")
                         }
                     }
-                    .listRowBackground(Color.red)
-                    .cornerRadius(10)
-                    .padding(.vertical, 5)
+                    Section(header: Text("Account").fontWeight(.bold),
+                            footer: Text("Manage your account settings.")) {
+                        NavigationLink(destination: Text("Profile Details")) {
+                            Text("Profile")
+                        }
+                        NavigationLink(destination: Text("Security Settings")) {
+                            Text("Security")
+                        }
+                    }
                 }
+                .listStyle(GroupedListStyle())
+                
+                Button(action: {
+                    authManager.signOut()
+                }) {
+                    Text("SIGN OUT")
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .background(Color.red)
+                        .cornerRadius(10)
+                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 20)
             }
-            .listStyle(GroupedListStyle())
             .navigationBarTitle("Settings")
             .scrollContentBackground(.hidden)
         }
     }
 }
-

@@ -64,12 +64,14 @@ struct WelcomeView: View {
                 }
                 .simultaneousGesture(TapGesture().onEnded {
                     authManager.continueAsGuest()
+                    self.navigateToHome = true
                     self.isTapped.toggle()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         self.isTapped.toggle()
                     }
                 })
                 .padding()
+
             }
             .navigationBarHidden(true)
         }
