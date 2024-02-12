@@ -22,6 +22,8 @@
 		DC8B2E3C2B72BA9700A3F865 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8B2E3B2B72BA9700A3F865 /* ContentView.swift */; };
 		DC8B2E3E2B72BB4600A3F865 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8B2E3D2B72BB4600A3F865 /* AuthenticationManager.swift */; };
 		DC8B2E402B72C8E000A3F865 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC8B2E3F2B72C80600A3F865 /* GoogleService-Info.plist */; };
+		DC9EE3E22B76AF3900C96102 /* AdminView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9EE3E12B76AF3900C96102 /* AdminView.swift */; };
+		DC9EE3E42B76B4FE00C96102 /* NotificationTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9EE3E32B76B4FE00C96102 /* NotificationTypes.swift */; };
 		DCB0608A2B59E17D00F17904 /* Capstone_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB060892B59E17D00F17904 /* Capstone_AppApp.swift */; };
 		DCB0608E2B59E17F00F17904 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCB0608D2B59E17F00F17904 /* Assets.xcassets */; };
 		DCB0609B2B59E18000F17904 /* Capstone_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB0609A2B59E18000F17904 /* Capstone_AppTests.swift */; };
@@ -62,6 +64,8 @@
 		DC8B2E3B2B72BA9700A3F865 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DC8B2E3D2B72BB4600A3F865 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		DC8B2E3F2B72C80600A3F865 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DC9EE3E12B76AF3900C96102 /* AdminView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminView.swift; sourceTree = "<group>"; };
+		DC9EE3E32B76B4FE00C96102 /* NotificationTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTypes.swift; sourceTree = "<group>"; };
 		DCB060862B59E17D00F17904 /* Capstone App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Capstone App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCB060892B59E17D00F17904 /* Capstone_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Capstone_AppApp.swift; sourceTree = "<group>"; };
 		DCB0608D2B59E17F00F17904 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -161,6 +165,8 @@
 				DCB060B52B59E4A900F17904 /* LoginView.swift */,
 				DCB060B72B59E4BC00F17904 /* RegisterView.swift */,
 				DCB0608D2B59E17F00F17904 /* Assets.xcassets */,
+				DC9EE3E12B76AF3900C96102 /* AdminView.swift */,
+				DC9EE3E32B76B4FE00C96102 /* NotificationTypes.swift */,
 			);
 			path = "Capstone App";
 			sourceTree = "<group>";
@@ -341,6 +347,8 @@
 				DC3FE6A52B73DF96002E9992 /* PasswordField.swift in Sources */,
 				DCB0608A2B59E17D00F17904 /* Capstone_AppApp.swift in Sources */,
 				DC8AF1C22B7157BD0013CC6C /* SettingsView.swift in Sources */,
+				DC9EE3E42B76B4FE00C96102 /* NotificationTypes.swift in Sources */,
+				DC9EE3E22B76AF3900C96102 /* AdminView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

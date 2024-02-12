@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct MainTabView: View {
+    @EnvironmentObject var authManager: AuthenticationManager
+
     var body: some View {
         TabView {
             HomeView()
@@ -17,7 +19,13 @@ struct MainTabView: View {
                 .tabItem {
                     Label("Settings", systemImage: "gearshape.fill")
                 }
-                .accentColor(Color(red: 0 / 255, green: 129 / 255, blue: 246 / 255))
+            
+            if authManager.isAdmin {
+                AdminView()
+                    .tabItem {
+                        Label("Admin", systemImage: "lock.fill")
+                    }
+            }
         }
     }
 }

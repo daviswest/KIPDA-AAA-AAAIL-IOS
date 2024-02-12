@@ -1,20 +1,117 @@
 import SwiftUI
+import Firebase
+import FirebaseFirestoreSwift
 
-struct NotificationItem: Identifiable {
-    var id = UUID()
-    var title: String
-    var message: String
-    var date: Date
-    var type: NotificationType
-    var priority: NotificationPriority
-}
+struct HomeView: View {
+    @State private var notifications: [NotificationItem] = []
+    @State private var hiddenNotificationIds: Set<String> = []
 
-enum NotificationType {
-    case weather, community, health
-}
+    var body: some View {
+        NavigationView {
+            VStack {
+                HStack {
+                    Image("kipda_logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 60)
+                        .padding(.leading, 10)
+                    
+                    Spacer()
+                }
+                Divider()
+                
+                List {
+                    ForEach(notifications) { item in
+                        NavigationLink(destination: NotificationDetailView(notification: item)) {
+                            NotificationRow(item: item)
+                        }
+                    }
+                    .onDelete(perform: deleteItems)
+                }
+                .listStyle(PlainListStyle())
+                .onAppear {
+                    fetchNotifications()
+                }
+            }
+            .navigationBarTitle("Emergency Notifications", displayMode: .inline)
+            .navigationBarHidden(true)
+        }
+    }
+    
+    func fetchNotifications() {
+        let db = Firestore.firestore()
+        
+        if let currentUserID = Auth.auth().currentUser?.uid {
+            let userRef = db.collection("users").document(currentUserID)
+            
+            userRef.getDocument { (documentSnapshot, error) in
+                guard let document = documentSnapshot, document.exists,
+                      let userData = document.data(),
+                      let hiddenIds = userData["hiddenNotifications"] as? [String] else {
+                    print("Error fetching user data: \(error?.localizedDescription ?? "Unknown error")")
+                    return
+                }
+                
+                self.hiddenNotificationIds = Set(hiddenIds)
+                
+                db.collection("notifications").order(by: "date", descending: true).getDocuments { (querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        self.notifications = querySnapshot!.documents.compactMap { document -> NotificationItem? in
+                            let notificationId = document.documentID
+                            if self.hiddenNotificationIds.contains(notificationId) {
+                                return nil
+                            } else {
+                                return self.mapDocumentToNotificationItem(document: document)
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            print("No user is logged in")
+        }
+    }
 
-enum NotificationPriority {
-    case high, medium, low
+    private func mapDocumentToNotificationItem(document: QueryDocumentSnapshot) -> NotificationItem? {
+        let data = document.data()
+        let title = data["title"] as? String ?? ""
+        let message = data["message"] as? String ?? ""
+        let date = (data["date"] as? Timestamp)?.dateValue() ?? Date()
+        let typeString = data["type"] as? String ?? NotificationType.weather.rawValue
+        let priorityString = data["priority"] as? String ?? NotificationPriority.low.rawValue
+        guard let type = NotificationType(rawValue: typeString),
+              let priority = NotificationPriority(rawValue: priorityString) else {
+            return nil
+        }
+        return NotificationItem(id: document.documentID, title: title, message: message, date: date, type: type, priority: priority)
+    }
+
+    func deleteItems(at offsets: IndexSet) {
+        guard let currentUserID = Auth.auth().currentUser?.uid else {
+            print("No user is logged in")
+            return
+        }
+
+        let idsToDelete = offsets.compactMap { notifications[$0].id }
+        notifications.remove(atOffsets: offsets)
+
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(currentUserID)
+
+        for id in idsToDelete {
+            userRef.updateData([
+                "hiddenNotifications": FieldValue.arrayUnion([id])
+            ]) { error in
+                if let error = error {
+                    print("Error updating hidden notifications: \(error.localizedDescription)")
+                } else {
+                    print("Successfully updated hidden notifications.")
+                }
+            }
+        }
+    }
 }
 
 struct NotificationRow: View {
@@ -48,7 +145,6 @@ struct NotificationRow: View {
         }
     }
 
-    
     var body: some View {
         HStack(spacing: 10) {
             icon
@@ -58,7 +154,6 @@ struct NotificationRow: View {
                 HStack {
                     Text(item.title)
                         .font(.headline)
-                        .accessibilityAddTraits(.isHeader)
                     priorityIndicator
                 }
                 
@@ -69,45 +164,5 @@ struct NotificationRow: View {
                     .foregroundColor(.secondary)
             }
         }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(item.title), \(item.message), \(item.date, style: .date)")
     }
 }
-
-struct HomeView: View {
-    private let notifications = [
-        NotificationItem(title: "Weather Alert", message: "Severe thunderstorm warning in your area. Take precautions.", date: Date(), type: .weather, priority: .high),
-        NotificationItem(title: "Community Update", message: "Local community center closed today due to maintenance.", date: Date().addingTimeInterval(-86400), type: .community, priority: .medium),
-        NotificationItem(title: "Health Advisory", message: "Flu season is here. Consider getting vaccinated.", date: Date().addingTimeInterval(-172800), type: .health, priority: .low)
-    ]
-    
-    var body: some View {
-        NavigationView {
-            VStack {
-                HStack {
-                    Image("kipda_logo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 60)
-                        .padding(.leading, 10)
-                        .padding(.top, 0)
-                        .padding(.bottom, 0)
-
-                    Spacer()
-                }
-                Divider()
-                
-                List(notifications) { item in
-                    NavigationLink(destination: NotificationDetailView(notification: item)) {
-                        NotificationRow(item: item)
-                    }
-                }
-                .listStyle(PlainListStyle())
-            }
-            .navigationBarTitle("Emergency Notifications", displayMode: .inline)
-            .navigationBarHidden(true)
-        }
-        .accessibilityElement(children: .combine)
-    }
-}
-
