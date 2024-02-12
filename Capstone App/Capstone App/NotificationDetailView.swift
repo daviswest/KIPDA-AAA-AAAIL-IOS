@@ -67,7 +67,7 @@ struct NotificationDetailView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
-                Text(notification.message)
+                Text(notification.detail)
             }
             .padding()
         }

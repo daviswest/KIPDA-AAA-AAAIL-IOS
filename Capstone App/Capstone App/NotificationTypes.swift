@@ -5,6 +5,7 @@ struct NotificationItem: Identifiable, Codable {
     @DocumentID var id: String?
     var title: String
     var message: String
+    var detail: String
     var date: Date
     var type: NotificationType
     var priority: NotificationPriority
