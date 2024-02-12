@@ -78,6 +78,7 @@ struct HomeView: View {
         let data = document.data()
         let title = data["title"] as? String ?? ""
         let message = data["message"] as? String ?? ""
+        let detail = data["detail"] as? String ?? ""
         let date = (data["date"] as? Timestamp)?.dateValue() ?? Date()
         let typeString = data["type"] as? String ?? NotificationType.weather.rawValue
         let priorityString = data["priority"] as? String ?? NotificationPriority.low.rawValue
@@ -85,7 +86,7 @@ struct HomeView: View {
               let priority = NotificationPriority(rawValue: priorityString) else {
             return nil
         }
-        return NotificationItem(id: document.documentID, title: title, message: message, date: date, type: type, priority: priority)
+        return NotificationItem(id: document.documentID, title: title, message: message, detail: detail, date: date, type: type, priority: priority)
     }
 
     func deleteItems(at offsets: IndexSet) {
