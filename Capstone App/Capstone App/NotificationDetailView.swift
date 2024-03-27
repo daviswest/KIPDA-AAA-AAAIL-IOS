@@ -92,7 +92,7 @@ struct NotificationDetailView: View {
 
     private func hideNotificationForUser(notificationId: String) {
         guard let currentUserID = Auth.auth().currentUser?.uid else {
-            print("No user is logged in")
+            print("No user or guest is logged in")
             return
         }
 

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DC3FE6A52B73DF96002E9992 /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3FE6A42B73DF95002E9992 /* PasswordField.swift */; };
+		DC57DADA2BB4717E00D7173C /* ServiceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57DAD92BB4717E00D7173C /* ServiceDetailView.swift */; };
 		DC8AF1BC2B714E3E0013CC6C /* NotificationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8AF1BB2B714E3E0013CC6C /* NotificationDetailView.swift */; };
 		DC8AF1BE2B7155190013CC6C /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8AF1BD2B7155190013CC6C /* MainTabView.swift */; };
 		DC8AF1C02B7155410013CC6C /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8AF1BF2B7155410013CC6C /* ServicesView.swift */; };
@@ -57,6 +58,7 @@
 
 /* Begin PBXFileReference section */
 		DC3FE6A42B73DF95002E9992 /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
+		DC57DAD92BB4717E00D7173C /* ServiceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailView.swift; sourceTree = "<group>"; };
 		DC8AF1BB2B714E3E0013CC6C /* NotificationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDetailView.swift; sourceTree = "<group>"; };
 		DC8AF1BD2B7155190013CC6C /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		DC8AF1BF2B7155410013CC6C /* ServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesView.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				DCB0608D2B59E17F00F17904 /* Assets.xcassets */,
 				DC9EE3E12B76AF3900C96102 /* AdminView.swift */,
 				DC9EE3E32B76B4FE00C96102 /* NotificationTypes.swift */,
+				DC57DAD92BB4717E00D7173C /* ServiceDetailView.swift */,
 			);
 			path = "Capstone App";
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				DC8AF1BE2B7155190013CC6C /* MainTabView.swift in Sources */,
 				DCB060B42B59E49600F17904 /* WelcomeView.swift in Sources */,
 				DCF53F762B5EC52500EF232C /* SetLanguageView.swift in Sources */,
+				DC57DADA2BB4717E00D7173C /* ServiceDetailView.swift in Sources */,
 				DC8B2E3E2B72BB4600A3F865 /* AuthenticationManager.swift in Sources */,
 				DC8AF1BC2B714E3E0013CC6C /* NotificationDetailView.swift in Sources */,
 				DCF53F782B5ECEE100EF232C /* HomeView.swift in Sources */,
