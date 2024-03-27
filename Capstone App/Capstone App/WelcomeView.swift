@@ -14,11 +14,16 @@ struct WelcomeView: View {
                 Image("kipda_logo")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 200, height: 300)
+                    .frame(width: 200, height: 200)
+                    .padding(.bottom, 10)
                 
                 Text(NSLocalizedString("welcome_message", comment: "Welcome message"))
-                    .font(.title2)
+                    .font(.system(size: UIScreen.main.bounds.width * 0.05))
                     .fontWeight(.bold)
+                    .padding(.bottom, 5)
+                
+                Text("Your Area Agency on Aging")
+                    .font(.system(size: UIScreen.main.bounds.width * 0.04))
                     .padding(.bottom, 50)
                 
                 NavigationLink(destination: LoginView()) {
@@ -71,7 +76,10 @@ struct WelcomeView: View {
                     }
                 })
                 .padding()
-
+                Image("kipda_small_logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 100)
             }
             .navigationBarHidden(true)
         }

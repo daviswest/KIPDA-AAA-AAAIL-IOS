@@ -37,7 +37,7 @@ struct HomeView: View {
             .navigationBarHidden(true)
         }
     }
-    
+
     func fetchNotifications() {
         let db = Firestore.firestore()
         
@@ -80,8 +80,8 @@ struct HomeView: View {
         let message = data["message"] as? String ?? ""
         let detail = data["detail"] as? String ?? ""
         let date = (data["date"] as? Timestamp)?.dateValue() ?? Date()
-        let typeString = data["type"] as? String ?? NotificationType.weather.rawValue
-        let priorityString = data["priority"] as? String ?? NotificationPriority.low.rawValue
+        let typeString = data["type"] as? String ?? ""
+        let priorityString = data["priority"] as? String ?? ""
         guard let type = NotificationType(rawValue: typeString),
               let priority = NotificationPriority(rawValue: priorityString) else {
             return nil
@@ -122,8 +122,12 @@ struct NotificationRow: View {
         switch item.type {
         case .weather:
             return Image(systemName: "cloud.rain.fill")
-        case .community:
-            return Image(systemName: "building.2.fill")
+        case .service:
+            return Image(systemName: "megaphone.fill")
+        case .closure:
+            return Image(systemName: "nosign")
+        case .event:
+            return Image(systemName: "calendar")
         case .health:
             return Image(systemName: "cross.fill")
         }

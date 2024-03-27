@@ -10,8 +10,13 @@ struct AdminView: View {
     @State private var date = Date()
     @State private var selectedType = NotificationType.weather
     @State private var selectedPriority = NotificationPriority.medium
+    @State private var selectedZipCodes = Set<String>()
     @State private var showSuccessMessage = false
     @State private var successMessage = ""
+    @State private var showingZipCodeSelector = false
+    // Assuming you have a list of all Louisville zip codes.
+    // Replace the placeholder array with actual zip codes.
+    let allZipCodes = ["40202", "40203", "40204", "40205"] // Add all Louisville zip codes here
 
     init() {
         fetchNotifications()
@@ -35,11 +40,27 @@ struct AdminView: View {
                             Text(priority.rawValue.capitalized).tag(priority)
                         }
                     }
+                    Button("Select Zip Codes") {
+                        showingZipCodeSelector = true
+                    }
+                    .sheet(isPresented: $showingZipCodeSelector) {
+                        ZipCodeSelector(selectedZipCodes: $selectedZipCodes, allZipCodes: allZipCodes)
+                    }
+                    if !selectedZipCodes.isEmpty {
+                                        VStack(alignment: .leading) {
+                                            Text("Selected Zip Codes:")
+                                                .font(.headline)
+                                                .padding(.top)
+                                            Text(selectedZipCodes.joined(separator: ", "))
+                                                .font(.body)
+                                                .padding(.bottom)
+                                        }
+                                    }
                     Button("Add Notification") {
                         addNotification()
                     }
                     if showSuccessMessage {
-                        HStack{
+                        HStack {
                             Spacer()
                             Text(successMessage)
                                 .font(.caption)
@@ -50,7 +71,6 @@ struct AdminView: View {
                                 .padding(.bottom, 10)
                             Spacer()
                         }
-                        
                     }
                 }
                 
@@ -72,6 +92,7 @@ struct AdminView: View {
             .navigationBarTitle("Manage Notifications")
             .onAppear(perform: fetchNotifications)
             .scrollContentBackground(.hidden)
+            
         }
     }
 
@@ -83,7 +104,8 @@ struct AdminView: View {
             "detail": detail,
             "date": Timestamp(date: date),
             "type": selectedType.rawValue,
-            "priority": selectedPriority.rawValue
+            "priority": selectedPriority.rawValue,
+            "zipCodes": Array(selectedZipCodes) // Storing selected zip codes
         ]) { err in
             if let err = err {
                 print("Error adding document: \(err)")
@@ -98,7 +120,7 @@ struct AdminView: View {
             }
         }
     }
-    
+
     private func resetFormFields() {
         title = ""
         message = ""
@@ -106,6 +128,7 @@ struct AdminView: View {
         date = Date()
         selectedType = .weather
         selectedPriority = .medium
+        selectedZipCodes = []
     }
 
     func fetchNotifications() {
@@ -148,5 +171,52 @@ struct AdminView: View {
                 }
             }
         }
+    }
+}
+
+struct ZipCodeSelector: View {
+    @Environment(\.presentationMode) var presentationMode
+    @Binding var selectedZipCodes: Set<String>
+    let allZipCodes: [String]
+
+    var body: some View {
+        NavigationView {
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 10)], spacing: 20) {
+                    ForEach(allZipCodes, id: \.self) { zipCode in
+                        ZipCodeButton(zipCode: zipCode, isSelected: selectedZipCodes.contains(zipCode)) {
+                            if selectedZipCodes.contains(zipCode) {
+                                selectedZipCodes.remove(zipCode)
+                            } else {
+                                selectedZipCodes.insert(zipCode)
+                            }
+                        }
+                    }
+                }
+                .padding()
+            }
+            .navigationTitle("Select Zip Codes")
+            .navigationBarItems(trailing: Button("Done") {
+                presentationMode.wrappedValue.dismiss()
+            })
+        }
+    }
+}
+
+struct ZipCodeButton: View {
+    let zipCode: String
+    let isSelected: Bool
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+                    Text(zipCode)
+                        .font(.caption) // Adjust font size here
+                        .padding()
+                        .frame(minWidth: 0, maxWidth: .infinity) // Ensure button uses available space
+                        .foregroundColor(isSelected ? .white : .black)
+                        .background(isSelected ? Color.blue : Color.gray.opacity(0.3))
+                        .cornerRadius(10)
+                }
     }
 }

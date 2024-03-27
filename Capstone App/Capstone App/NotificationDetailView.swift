@@ -9,12 +9,17 @@ struct NotificationDetailView: View {
         switch notification.type {
         case .weather:
             return Image(systemName: "cloud.rain.fill").resizable()
-        case .community:
-            return Image(systemName: "building.2.fill").resizable()
+        case .service:
+            return Image(systemName: "megaphone.fill").resizable()
+        case .closure:
+            return Image(systemName: "nosign").resizable()
+        case .event:
+            return Image(systemName: "calendar").resizable()
         case .health:
             return Image(systemName: "cross.fill").resizable()
         }
     }
+
 
     private var priorityIndicator: some View {
         Text("Priority: \(priorityText)")

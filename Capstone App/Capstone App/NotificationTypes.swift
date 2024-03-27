@@ -13,7 +13,9 @@ struct NotificationItem: Identifiable, Codable {
 
 enum NotificationType: String, Codable, CaseIterable {
     case weather = "Weather"
-    case community = "Community"
+    case service = "Service announcement"
+    case closure = "Closure"
+    case event = "Event"
     case health = "Health"
 }
 
