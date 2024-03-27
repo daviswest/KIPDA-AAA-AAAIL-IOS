@@ -61,27 +61,35 @@ class AuthenticationManager: ObservableObject {
                 print("Error signing in anonymously: \(error.localizedDescription)")
             } else if let user = authResult?.user {
                 print("User signed in anonymously with UID: \(user.uid)")
-                self.createUserDocument(for: user)
+                self.createUserDocument(for: user) {
+                    DispatchQueue.main.async {
+                        self.isGuest = true
+                        self.isAuthenticated = true
+                    }
+                }
             }
         }
     }
+
         
-    private func createUserDocument(for user: User) {
+    private func createUserDocument(for user: User, completion: @escaping () -> Void) {
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(user.uid)
         
         userRef.setData([
             "uid": user.uid,
             "createdAt": FieldValue.serverTimestamp(),
-            "hiddenNotifications": FieldValue.arrayUnion([])
+            "hiddenNotifications": []
         ], merge: true) { error in
             if let error = error {
                 print("Error creating user document: \(error.localizedDescription)")
             } else {
                 print("User document successfully created or updated with hiddenNotifications initialized")
             }
+            completion()
         }
     }
+
 
     func linkAnonymousAccountToEmail(email: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
         guard let currentUser = Auth.auth().currentUser, currentUser.isAnonymous else {

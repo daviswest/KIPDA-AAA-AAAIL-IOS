@@ -1,8 +1,10 @@
 import SwiftUI
 import Firebase
 import FirebaseFirestoreSwift
+import Combine
 
 struct HomeView: View {
+    @EnvironmentObject var authManager: AuthenticationManager
     @State private var notifications: [NotificationItem] = []
     @State private var hiddenNotificationIds: Set<String> = []
 
@@ -30,10 +32,23 @@ struct HomeView: View {
                 }
                 .listStyle(PlainListStyle())
                 .onAppear {
-                    fetchNotifications()
-                }
+                                if authManager.isAuthenticated || authManager.isGuest {
+                                    fetchNotifications()
+                                }
+                            }
+                            .onReceive(authManager.$isAuthenticated) { isAuthenticated in
+                                if isAuthenticated {
+                                    fetchNotifications()
+                                }
+                            }
+                            .onReceive(authManager.$isGuest) { isGuest in
+                                if isGuest {
+                                    fetchNotifications()
+                                }
+                            }
+
+
             }
-            .navigationBarTitle("Emergency Notifications", displayMode: .inline)
             .navigationBarHidden(true)
         }
     }
@@ -41,36 +56,37 @@ struct HomeView: View {
     func fetchNotifications() {
         let db = Firestore.firestore()
         
-        if let currentUserID = Auth.auth().currentUser?.uid {
-            let userRef = db.collection("users").document(currentUserID)
+        guard let currentUserID = Auth.auth().currentUser?.uid else {
+                print("No user or guest is logged in")
+                return
+            }
+        
+        let userRef = db.collection("users").document(currentUserID)
+        
+        userRef.getDocument { (documentSnapshot, error) in
+            guard let document = documentSnapshot, document.exists,
+                  let userData = document.data(),
+                  let hiddenIds = userData["hiddenNotifications"] as? [String] else {
+                print("Error fetching user data: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
             
-            userRef.getDocument { (documentSnapshot, error) in
-                guard let document = documentSnapshot, document.exists,
-                      let userData = document.data(),
-                      let hiddenIds = userData["hiddenNotifications"] as? [String] else {
-                    print("Error fetching user data: \(error?.localizedDescription ?? "Unknown error")")
-                    return
-                }
-                
-                self.hiddenNotificationIds = Set(hiddenIds)
-                
-                db.collection("notifications").order(by: "date", descending: true).getDocuments { (querySnapshot, err) in
-                    if let err = err {
-                        print("Error getting documents: \(err)")
-                    } else {
-                        self.notifications = querySnapshot!.documents.compactMap { document -> NotificationItem? in
-                            let notificationId = document.documentID
-                            if self.hiddenNotificationIds.contains(notificationId) {
-                                return nil
-                            } else {
-                                return self.mapDocumentToNotificationItem(document: document)
-                            }
+            self.hiddenNotificationIds = Set(hiddenIds)
+            
+            db.collection("notifications").order(by: "date", descending: true).getDocuments { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    self.notifications = querySnapshot!.documents.compactMap { document -> NotificationItem? in
+                        let notificationId = document.documentID
+                        if self.hiddenNotificationIds.contains(notificationId) {
+                            return nil
+                        } else {
+                            return self.mapDocumentToNotificationItem(document: document)
                         }
                     }
                 }
             }
-        } else {
-            print("No user is logged in")
         }
     }
 
