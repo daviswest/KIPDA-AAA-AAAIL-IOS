@@ -32,6 +32,10 @@ struct HomeView: View {
                 }
                 .listStyle(PlainListStyle())
                 .onAppear {
+                    print("View appeared. isAuthenticated: \(authManager.isAuthenticated), isGuest: \(authManager.isGuest)")
+                        if authManager.isAuthenticated || authManager.isGuest {
+                            fetchNotifications()
+                        }
                                 if authManager.isAuthenticated || authManager.isGuest {
                                     fetchNotifications()
                                 }
@@ -55,29 +59,33 @@ struct HomeView: View {
 
     func fetchNotifications() {
         let db = Firestore.firestore()
-        
+
         guard let currentUserID = Auth.auth().currentUser?.uid else {
-                print("No user or guest is logged in")
+            print("No user or guest is logged in")
+            return
+        }
+
+        let userRef = db.collection("users").document(currentUserID)
+
+        userRef.getDocument { (documentSnapshot, error) in
+            if let error = error {
+                print("Error fetching user data: \(error.localizedDescription)")
                 return
             }
-        
-        let userRef = db.collection("users").document(currentUserID)
-        
-        userRef.getDocument { (documentSnapshot, error) in
             guard let document = documentSnapshot, document.exists,
                   let userData = document.data(),
                   let hiddenIds = userData["hiddenNotifications"] as? [String] else {
-                print("Error fetching user data: \(error?.localizedDescription ?? "Unknown error")")
+                print("User document does not exist or missing hiddenNotifications field.")
                 return
             }
-            
+
             self.hiddenNotificationIds = Set(hiddenIds)
-            
+
             db.collection("notifications").order(by: "date", descending: true).getDocuments { (querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")
-                } else {
-                    self.notifications = querySnapshot!.documents.compactMap { document -> NotificationItem? in
+                } else if let documents = querySnapshot?.documents, !documents.isEmpty {
+                    self.notifications = documents.compactMap { document -> NotificationItem? in
                         let notificationId = document.documentID
                         if self.hiddenNotificationIds.contains(notificationId) {
                             return nil
@@ -85,6 +93,8 @@ struct HomeView: View {
                             return self.mapDocumentToNotificationItem(document: document)
                         }
                     }
+                } else {
+                    print("No notifications fetched.")
                 }
             }
         }
@@ -98,12 +108,20 @@ struct HomeView: View {
         let date = (data["date"] as? Timestamp)?.dateValue() ?? Date()
         let typeString = data["type"] as? String ?? ""
         let priorityString = data["priority"] as? String ?? ""
+
+        
         guard let type = NotificationType(rawValue: typeString),
               let priority = NotificationPriority(rawValue: priorityString) else {
+            print("Failed to map notification due to type or priority mismatch. Type: \(typeString), Priority: \(priorityString)")
             return nil
         }
+        
         return NotificationItem(id: document.documentID, title: title, message: message, detail: detail, date: date, type: type, priority: priority)
     }
+
+
+
+
 
     func deleteItems(at offsets: IndexSet) {
         guard let currentUserID = Auth.auth().currentUser?.uid else {
@@ -124,7 +142,6 @@ struct HomeView: View {
                 if let error = error {
                     print("Error updating hidden notifications: \(error.localizedDescription)")
                 } else {
-                    print("Successfully updated hidden notifications.")
                 }
             }
         }

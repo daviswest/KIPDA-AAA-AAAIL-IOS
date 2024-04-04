@@ -1,6 +1,7 @@
 import Foundation
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseMessaging
 
 class AuthenticationManager: ObservableObject {
     @Published var isAuthenticated = false
@@ -63,6 +64,7 @@ class AuthenticationManager: ObservableObject {
                 print("User signed in anonymously with UID: \(user.uid)")
                 self.createUserDocument(for: user) {
                     DispatchQueue.main.async {
+                        self.isAdmin = false
                         self.isGuest = true
                         self.isAuthenticated = true
                     }

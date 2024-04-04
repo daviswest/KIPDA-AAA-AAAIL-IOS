@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		DC3FE6A52B73DF96002E9992 /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3FE6A42B73DF95002E9992 /* PasswordField.swift */; };
 		DC57DADA2BB4717E00D7173C /* ServiceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57DAD92BB4717E00D7173C /* ServiceDetailView.swift */; };
+		DC57DADC2BB5AE1400D7173C /* CountyAndZipCodeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57DADB2BB5AE1400D7173C /* CountyAndZipCodeSelector.swift */; };
+		DC57DADE2BB6FAD300D7173C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57DADD2BB6FAD300D7173C /* ProfileView.swift */; };
+		DC57DAE02BB702EC00D7173C /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57DADF2BB702EC00D7173C /* ChangePasswordView.swift */; };
+		DC57DAE42BB72E6900D7173C /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = DC57DAE32BB72E6900D7173C /* FirebaseMessaging */; };
 		DC8AF1BC2B714E3E0013CC6C /* NotificationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8AF1BB2B714E3E0013CC6C /* NotificationDetailView.swift */; };
 		DC8AF1BE2B7155190013CC6C /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8AF1BD2B7155190013CC6C /* MainTabView.swift */; };
 		DC8AF1C02B7155410013CC6C /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8AF1BF2B7155410013CC6C /* ServicesView.swift */; };
@@ -59,6 +63,10 @@
 /* Begin PBXFileReference section */
 		DC3FE6A42B73DF95002E9992 /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
 		DC57DAD92BB4717E00D7173C /* ServiceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailView.swift; sourceTree = "<group>"; };
+		DC57DADB2BB5AE1400D7173C /* CountyAndZipCodeSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountyAndZipCodeSelector.swift; sourceTree = "<group>"; };
+		DC57DADD2BB6FAD300D7173C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		DC57DADF2BB702EC00D7173C /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
+		DC57DAE12BB70D1200D7173C /* Capstone-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Capstone-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		DC8AF1BB2B714E3E0013CC6C /* NotificationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDetailView.swift; sourceTree = "<group>"; };
 		DC8AF1BD2B7155190013CC6C /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		DC8AF1BF2B7155410013CC6C /* ServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesView.swift; sourceTree = "<group>"; };
@@ -85,6 +93,7 @@
 		DCF53F732B5EC45200EF232C /* LanguageSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettings.swift; sourceTree = "<group>"; };
 		DCF53F752B5EC52500EF232C /* SetLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetLanguageView.swift; sourceTree = "<group>"; };
 		DCF53F772B5ECEE100EF232C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		DCFC899A2BBC738300DE0CDF /* Capstone App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Capstone App.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC57DAE42BB72E6900D7173C /* FirebaseMessaging in Frameworks */,
 				DC8B2E342B72A57F00A3F865 /* FirebaseDatabaseSwift in Frameworks */,
 				DC8B2E3A2B72A57F00A3F865 /* FirebaseFunctions in Frameworks */,
 				DC8B2E322B72A57F00A3F865 /* FirebaseDatabase in Frameworks */,
@@ -122,9 +132,15 @@
 		DC3FE6A72B73E100002E9992 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				DCB060892B59E17D00F17904 /* Capstone_AppApp.swift */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DC57DAE22BB72E6900D7173C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		DCB0607D2B59E17D00F17904 = {
@@ -134,6 +150,7 @@
 				DCB060992B59E18000F17904 /* Capstone AppTests */,
 				DCB060A32B59E18000F17904 /* Capstone AppUITests */,
 				DCB060872B59E17D00F17904 /* Products */,
+				DC57DAE22BB72E6900D7173C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -150,6 +167,9 @@
 		DCB060882B59E17D00F17904 /* Capstone App */ = {
 			isa = PBXGroup;
 			children = (
+				DCFC899A2BBC738300DE0CDF /* Capstone App.entitlements */,
+				DCB060892B59E17D00F17904 /* Capstone_AppApp.swift */,
+				DC57DAE12BB70D1200D7173C /* Capstone-App-Info.plist */,
 				DC3FE6A72B73E100002E9992 /* Preview Content */,
 				DCF53F732B5EC45200EF232C /* LanguageSettings.swift */,
 				DCF53F752B5EC52500EF232C /* SetLanguageView.swift */,
@@ -170,6 +190,9 @@
 				DC9EE3E12B76AF3900C96102 /* AdminView.swift */,
 				DC9EE3E32B76B4FE00C96102 /* NotificationTypes.swift */,
 				DC57DAD92BB4717E00D7173C /* ServiceDetailView.swift */,
+				DC57DADB2BB5AE1400D7173C /* CountyAndZipCodeSelector.swift */,
+				DC57DADD2BB6FAD300D7173C /* ProfileView.swift */,
+				DC57DADF2BB702EC00D7173C /* ChangePasswordView.swift */,
 			);
 			path = "Capstone App";
 			sourceTree = "<group>";
@@ -215,6 +238,7 @@
 				DC8B2E352B72A57F00A3F865 /* FirebaseFirestore */,
 				DC8B2E372B72A57F00A3F865 /* FirebaseFirestoreSwift */,
 				DC8B2E392B72A57F00A3F865 /* FirebaseFunctions */,
+				DC57DAE32BB72E6900D7173C /* FirebaseMessaging */,
 			);
 			productName = "Capstone App";
 			productReference = DCB060862B59E17D00F17904 /* Capstone App.app */;
@@ -339,9 +363,11 @@
 				DC8AF1C02B7155410013CC6C /* ServicesView.swift in Sources */,
 				DCF53F742B5EC45200EF232C /* LanguageSettings.swift in Sources */,
 				DC8B2E3C2B72BA9700A3F865 /* ContentView.swift in Sources */,
+				DC57DADC2BB5AE1400D7173C /* CountyAndZipCodeSelector.swift in Sources */,
 				DCB060B82B59E4BC00F17904 /* RegisterView.swift in Sources */,
 				DC8AF1BE2B7155190013CC6C /* MainTabView.swift in Sources */,
 				DCB060B42B59E49600F17904 /* WelcomeView.swift in Sources */,
+				DC57DAE02BB702EC00D7173C /* ChangePasswordView.swift in Sources */,
 				DCF53F762B5EC52500EF232C /* SetLanguageView.swift in Sources */,
 				DC57DADA2BB4717E00D7173C /* ServiceDetailView.swift in Sources */,
 				DC8B2E3E2B72BB4600A3F865 /* AuthenticationManager.swift in Sources */,
@@ -351,6 +377,7 @@
 				DC3FE6A52B73DF96002E9992 /* PasswordField.swift in Sources */,
 				DCB0608A2B59E17D00F17904 /* Capstone_AppApp.swift in Sources */,
 				DC8AF1C22B7157BD0013CC6C /* SettingsView.swift in Sources */,
+				DC57DADE2BB6FAD300D7173C /* ProfileView.swift in Sources */,
 				DC9EE3E42B76B4FE00C96102 /* NotificationTypes.swift in Sources */,
 				DC9EE3E22B76AF3900C96102 /* AdminView.swift in Sources */,
 			);
@@ -528,16 +555,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Capstone App/Capstone App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Capstone App/Preview Content\"";
+				DEVELOPMENT_TEAM = 6DX692NV45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Capstone-App-Info.plist";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This allows us to send you notifications targeted to your current area, ensuring you receive the most useful updates and alerts. Your location data is used exclusively for tailoring notifications and is not shared with third parties without your consent.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This allows us to send you notifications targeted to your current area, ensuring you receive the most useful updates and alerts. Your location data is used exclusively for tailoring notifications and is not shared with third parties without your consent.";
+				INFOPLIST_KEY_NSLocationUsageDescription = "This allows us to send you notifications targeted to your current area, ensuring you receive the most useful updates and alerts. Your location data is used exclusively for tailoring notifications and is not shared with third parties without your consent.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This allows us to send you notifications targeted to your current area, ensuring you receive the most useful updates and alerts. Your location data is used exclusively for tailoring notifications and is not shared with third parties without your consent.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -557,16 +592,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Capstone App/Capstone App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Capstone App/Preview Content\"";
+				DEVELOPMENT_TEAM = 6DX692NV45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Capstone-App-Info.plist";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This allows us to send you notifications targeted to your current area, ensuring you receive the most useful updates and alerts. Your location data is used exclusively for tailoring notifications and is not shared with third parties without your consent.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This allows us to send you notifications targeted to your current area, ensuring you receive the most useful updates and alerts. Your location data is used exclusively for tailoring notifications and is not shared with third parties without your consent.";
+				INFOPLIST_KEY_NSLocationUsageDescription = "This allows us to send you notifications targeted to your current area, ensuring you receive the most useful updates and alerts. Your location data is used exclusively for tailoring notifications and is not shared with third parties without your consent.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This allows us to send you notifications targeted to your current area, ensuring you receive the most useful updates and alerts. Your location data is used exclusively for tailoring notifications and is not shared with third parties without your consent.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -706,6 +749,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DC57DAE32BB72E6900D7173C /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC8B2E2C2B72A57F00A3F865 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
 		DC8B2E2D2B72A57F00A3F865 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DC8B2E2C2B72A57F00A3F865 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
