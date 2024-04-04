@@ -5,10 +5,6 @@ struct ServiceDetailView: View {
     var service: ServiceItem
     @Environment(\.presentationMode) var presentationMode
 
-    private var serviceIcon: some View {
-        Image(systemName: "gearshape.fill").resizable()
-    }
-
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -17,9 +13,6 @@ struct ServiceDetailView: View {
                         .font(.title)
                         .fontWeight(.bold)
                     Spacer()
-                    serviceIcon
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(.secondary)
                 }
                 
                 Text(service.description)
