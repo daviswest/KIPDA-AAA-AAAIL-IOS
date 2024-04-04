@@ -4,40 +4,33 @@ import FirebaseFirestoreSwift
 
 struct AdminView: View {
     @State private var notifications: [NotificationItem] = []
-        @State private var title = ""
-        @State private var message = ""
-        @State private var detail = ""
-        @State private var date = Date()
-        @State private var selectedType = NotificationType.weather
-        @State private var selectedPriority = NotificationPriority.medium
-        @State private var selectedCounties = Set<String>() // Updated to handle multiple counties
-        @State private var selectedZipCodes = Set<String>()
-        @State private var showSuccessMessage = false
-        @State private var successMessage = ""
-        @State private var showErrorMessage = false
-        @State private var errorMessage = ""
-        @State private var showingLocationSelector = false
-    
-    // Dictionary holding counties and their zip codes
+    @State private var title = ""
+    @State private var message = ""
+    @State private var detail = ""
+    @State private var date = Date()
+    @State private var selectedType = NotificationType.weather
+    @State private var selectedPriority = NotificationPriority.medium
+    @State private var selectedCounties = Set<String>() // Handle multiple counties
+    @State private var showSuccessMessage = false
+    @State private var successMessage = ""
+    @State private var showErrorMessage = false
+    @State private var errorMessage = ""
+    @State private var showingCountySelector = false
+
+    // Dictionary holding counties, can still exist if needed for other parts of the app
     let countiesWithZipCodes: [String: [String]] = [
-        "Jefferson": [
-            "40018", "40023", "40025", "40027", "40041", "40059", "40067", "40071",
-            "40077", "40118", "40129", "40150", "40165", "40201", "40202", "40203",
-            "40204", "40205", "40206", "40207", "40208", "40209", "40210", "40211",
-            "40212", "40213", "40214", "40215", "40216", "40217", "40218", "40219",
-            "40220", "40221", "40222", "40223", "40224", "40225", "40228", "40229",
-            "40231", "40232", "40233", "40241", "40242", "40243", "40245", "40250",
-            "40251", "40252", "40253", "40255", "40256", "40257", "40258", "40259",
-            "40261", "40266", "40268", "40269", "40270", "40272", "40280", "40281",
-            "40282", "40283", "40285", "40287", "40289", "40290", "40291", "40292",
-            "40293", "40294", "40295", "40296", "40297", "40298", "40299"
-        ],
-        "Bullitt" : ["40444"],
-        "Shelby" : ["40444"],
-        "Spencer" : ["40444"],
-        "Oldham" : ["40444"],
-        "Henry" : ["40444"],
-        "Trimble" : ["40444"],
+        "Jefferson": ["40018", "40023", "40025", "40027", "40041", "40059", "40067", "40071",
+                      "40077", "40118", "40129", "40150", "40165", "40201", "40202", "40203",
+                      "40204", "40205", "40206", "40207", "40208", "40209", "40210", "40211",
+                      "40212", "40213", "40214", "40215", "40216", "40217", "40218", "40219",
+                      "40220", "40221", "40222", "40223", "40224", "40225", "40228", "40229",
+                      "40231", "40232", "40233", "40241", "40242", "40243", "40245", "40250",
+                      "40251", "40252", "40253", "40255", "40256", "40257", "40258", "40259",
+                      "40261", "40266", "40268", "40269", "40270", "40272", "40280", "40281",
+                      "40282", "40283", "40285", "40287", "40289", "40290", "40291", "40292",
+                      "40293", "40294", "40295", "40296", "40297", "40298", "40299"],
+        "Bullitt": ["40444"], "Shelby": ["40444"], "Spencer": ["40444"],
+        "Oldham": ["40444"], "Henry": ["40444"], "Trimble": ["40444"],
     ]
     
     init() {
@@ -63,32 +56,18 @@ struct AdminView: View {
                         }
                     }
                     Button("Select Recipients") {
-                                            showingLocationSelector = true
-                                        }
-                                        .sheet(isPresented: $showingLocationSelector) {
-                                            CountyAndZipCodeSelector(selectedCounties: $selectedCounties, selectedZipCodes: $selectedZipCodes, countiesWithZipCodes: countiesWithZipCodes)
-                                        }
-                                        
-                    // Assuming this is within your body definition in AdminView
+                        showingCountySelector = true
+                    }
+                    .sheet(isPresented: $showingCountySelector) {
+                        // Provide only county names for selection
+                        CountySelector(selectedCounties: $selectedCounties, counties: Array(countiesWithZipCodes.keys))
+                    }
 
-                    // After defining your body view or within the view where you intend to display selected zip codes
-                    let allZipCodesForSelectedCounties: Set<String> = Set(selectedCounties.flatMap { countiesWithZipCodes[$0, default: []] })
-
-                    // This flag determines if all zip codes in the selected counties have indeed been selected
-                    let areAllZipCodesSelected = !selectedZipCodes.isEmpty && selectedZipCodes == allZipCodesForSelectedCounties
-
-                    if selectedZipCodes.isEmpty {
-
-                    } else if areAllZipCodesSelected {
-                        Text("To: All users in \(selectedCounties.joined(separator: ", ")) county")
-                            .font(.headline)
-                            .padding(.top)
-                    } else {
-                        Text("To: \(selectedZipCodes.joined(separator: ", "))")
+                    if !selectedCounties.isEmpty {
+                        Text("To: All users in \(selectedCounties.joined(separator: ", ")) counties")
                             .font(.headline)
                             .padding(.top)
                     }
-
 
                     Button(action: {
                         addNotification()
@@ -102,7 +81,7 @@ struct AdminView: View {
                             .cornerRadius(10)
                             .padding(.horizontal)
                     }
-                    .padding(.top) // Add some space above the button if needed
+                    .padding(.top)
 
                     if showSuccessMessage {
                         HStack {
@@ -129,7 +108,6 @@ struct AdminView: View {
                         }
                         .padding(.bottom, 10)
                     }
-
                 }
                 
                 Section(header: Text("Existing Notifications").fontWeight(.bold)) {
@@ -155,47 +133,32 @@ struct AdminView: View {
     
     private func addNotification() {
         let db = Firestore.firestore()
-        
-        // Check if no counties or zip codes are selected
-        if selectedZipCodes.isEmpty {
+
+        if selectedCounties.isEmpty {
             self.errorMessage = "Error: Please select at least one recipient."
-                self.showErrorMessage = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                    self.showErrorMessage = false
-                }
-                return
+            self.showErrorMessage = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                self.showErrorMessage = false
+            }
+            return
         }
 
-        var documentData: [String: Any] = [
+        let documentData: [String: Any] = [
             "title": title,
             "message": message,
             "detail": detail,
             "date": Timestamp(date: date),
             "type": selectedType.rawValue,
-            "priority": selectedPriority.rawValue
+            "priority": selectedPriority.rawValue,
+            "selectedCounties": Array(selectedCounties)
         ]
-        
-        var allZipCodesForSelectedCounties = Set<String>()
-        for county in selectedCounties {
-            if let zipCodes = countiesWithZipCodes[county] {
-                allZipCodesForSelectedCounties.formUnion(zipCodes)
-            }
-        }
-        
-        if selectedZipCodes == allZipCodesForSelectedCounties && !selectedCounties.isEmpty {
-            documentData["targetCounties"] = Array(selectedCounties)
-            documentData["allZipCodesInSelectedCounties"] = true
-        } else if !selectedZipCodes.isEmpty {
-            documentData["targetZipCodes"] = Array(selectedZipCodes)
-            documentData["allZipCodesInSelectedCounties"] = false
-        }
         
         db.collection("notifications").addDocument(data: documentData) { err in
             if let err = err {
-                self.successMessage = "Error adding document: \(err.localizedDescription)"
-                self.showSuccessMessage = true
+                self.errorMessage = "Error adding document: \(err.localizedDescription)"
+                self.showErrorMessage = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                    self.showSuccessMessage = false
+                    self.showErrorMessage = false
                 }
             } else {
                 self.successMessage = "Notification successfully added!"
@@ -208,8 +171,6 @@ struct AdminView: View {
             }
         }
     }
-
-
     
     private func resetFormFields() {
         title = ""
@@ -218,7 +179,7 @@ struct AdminView: View {
         date = Date()
         selectedType = .weather
         selectedPriority = .medium
-        selectedZipCodes = []
+        selectedCounties = []
     }
 
     func fetchNotifications() {
@@ -261,52 +222,5 @@ struct AdminView: View {
                 }
             }
         }
-    }
-}
-
-struct ZipCodeSelector: View {
-    @Environment(\.presentationMode) var presentationMode
-    @Binding var selectedZipCodes: Set<String>
-    let allZipCodes: [String]
-
-    var body: some View {
-        NavigationView {
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 10)], spacing: 20) {
-                    ForEach(allZipCodes, id: \.self) { zipCode in
-                        ZipCodeButton(zipCode: zipCode, isSelected: selectedZipCodes.contains(zipCode)) {
-                            if selectedZipCodes.contains(zipCode) {
-                                selectedZipCodes.remove(zipCode)
-                            } else {
-                                selectedZipCodes.insert(zipCode)
-                            }
-                        }
-                    }
-                }
-                .padding()
-            }
-            .navigationTitle("Select Zip Codes")
-            .navigationBarItems(trailing: Button("Done") {
-                presentationMode.wrappedValue.dismiss()
-            })
-        }
-    }
-}
-
-struct ZipCodeButton: View {
-    let zipCode: String
-    let isSelected: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-                    Text(zipCode)
-                        .font(.caption) // Adjust font size here
-                        .padding()
-                        .frame(minWidth: 0, maxWidth: .infinity) // Ensure button uses available space
-                        .foregroundColor(isSelected ? .white : .black)
-                        .background(isSelected ? Color.blue : Color.gray.opacity(0.3))
-                        .cornerRadius(10)
-                }
     }
 }

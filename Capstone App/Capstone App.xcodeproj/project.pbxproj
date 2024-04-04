@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		DC3FE6A52B73DF96002E9992 /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3FE6A42B73DF95002E9992 /* PasswordField.swift */; };
 		DC57DADA2BB4717E00D7173C /* ServiceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57DAD92BB4717E00D7173C /* ServiceDetailView.swift */; };
-		DC57DADC2BB5AE1400D7173C /* CountyAndZipCodeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57DADB2BB5AE1400D7173C /* CountyAndZipCodeSelector.swift */; };
 		DC57DADE2BB6FAD300D7173C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57DADD2BB6FAD300D7173C /* ProfileView.swift */; };
 		DC57DAE02BB702EC00D7173C /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57DADF2BB702EC00D7173C /* ChangePasswordView.swift */; };
 		DC57DAE42BB72E6900D7173C /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = DC57DAE32BB72E6900D7173C /* FirebaseMessaging */; };
+		DC79B3BD2BBF11A900A6AC8A /* CountySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC79B3BC2BBF11A900A6AC8A /* CountySelector.swift */; };
 		DC8AF1BC2B714E3E0013CC6C /* NotificationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8AF1BB2B714E3E0013CC6C /* NotificationDetailView.swift */; };
 		DC8AF1BE2B7155190013CC6C /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8AF1BD2B7155190013CC6C /* MainTabView.swift */; };
 		DC8AF1C02B7155410013CC6C /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8AF1BF2B7155410013CC6C /* ServicesView.swift */; };
@@ -63,10 +63,10 @@
 /* Begin PBXFileReference section */
 		DC3FE6A42B73DF95002E9992 /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
 		DC57DAD92BB4717E00D7173C /* ServiceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailView.swift; sourceTree = "<group>"; };
-		DC57DADB2BB5AE1400D7173C /* CountyAndZipCodeSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountyAndZipCodeSelector.swift; sourceTree = "<group>"; };
 		DC57DADD2BB6FAD300D7173C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		DC57DADF2BB702EC00D7173C /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		DC57DAE12BB70D1200D7173C /* Capstone-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Capstone-App-Info.plist"; sourceTree = SOURCE_ROOT; };
+		DC79B3BC2BBF11A900A6AC8A /* CountySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountySelector.swift; sourceTree = "<group>"; };
 		DC8AF1BB2B714E3E0013CC6C /* NotificationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDetailView.swift; sourceTree = "<group>"; };
 		DC8AF1BD2B7155190013CC6C /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		DC8AF1BF2B7155410013CC6C /* ServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesView.swift; sourceTree = "<group>"; };
@@ -190,7 +190,7 @@
 				DC9EE3E12B76AF3900C96102 /* AdminView.swift */,
 				DC9EE3E32B76B4FE00C96102 /* NotificationTypes.swift */,
 				DC57DAD92BB4717E00D7173C /* ServiceDetailView.swift */,
-				DC57DADB2BB5AE1400D7173C /* CountyAndZipCodeSelector.swift */,
+				DC79B3BC2BBF11A900A6AC8A /* CountySelector.swift */,
 				DC57DADD2BB6FAD300D7173C /* ProfileView.swift */,
 				DC57DADF2BB702EC00D7173C /* ChangePasswordView.swift */,
 			);
@@ -363,7 +363,6 @@
 				DC8AF1C02B7155410013CC6C /* ServicesView.swift in Sources */,
 				DCF53F742B5EC45200EF232C /* LanguageSettings.swift in Sources */,
 				DC8B2E3C2B72BA9700A3F865 /* ContentView.swift in Sources */,
-				DC57DADC2BB5AE1400D7173C /* CountyAndZipCodeSelector.swift in Sources */,
 				DCB060B82B59E4BC00F17904 /* RegisterView.swift in Sources */,
 				DC8AF1BE2B7155190013CC6C /* MainTabView.swift in Sources */,
 				DCB060B42B59E49600F17904 /* WelcomeView.swift in Sources */,
@@ -376,6 +375,7 @@
 				DCB060B62B59E4A900F17904 /* LoginView.swift in Sources */,
 				DC3FE6A52B73DF96002E9992 /* PasswordField.swift in Sources */,
 				DCB0608A2B59E17D00F17904 /* Capstone_AppApp.swift in Sources */,
+				DC79B3BD2BBF11A900A6AC8A /* CountySelector.swift in Sources */,
 				DC8AF1C22B7157BD0013CC6C /* SettingsView.swift in Sources */,
 				DC57DADE2BB6FAD300D7173C /* ProfileView.swift in Sources */,
 				DC9EE3E42B76B4FE00C96102 /* NotificationTypes.swift in Sources */,
