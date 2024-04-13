@@ -9,7 +9,7 @@ struct RegisterView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
-    @State private var zipCode: String = ""
+    @State private var countySelected: String = ""
     @State private var errorMessage: String?
 
     var body: some View {
@@ -36,16 +36,22 @@ struct RegisterView: View {
                     PasswordField(placeholder: "Password", password: $password)
                     PasswordField(placeholder: "Confirm Password", password: $confirmPassword)
                     
-                    TextField("ZIP Code", text: $zipCode)
-                        .keyboardType(.numberPad)
+                    Picker(selection: $countySelected, label: Text(countySelected.isEmpty ? "Select County" : countySelected)) {
+                        Text("Select County").tag("")
+                        Text("Jefferson").tag("Jefferson")
+                        Text("Bullitt").tag("Bullitt")
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    .frame(maxWidth: .infinity, maxHeight: 30)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(10)
                 }
                 .padding()
                 .background(Color(.systemGray6))
                 .cornerRadius(10)
-                .padding(.horizontal, 20)
             }
-        }
-            
+            .padding(.bottom, 20)
+            .padding(.horizontal, 20)
             if let errorMessage = errorMessage {
                 Text(errorMessage)
                     .font(.caption)
@@ -67,17 +73,23 @@ struct RegisterView: View {
             .padding(.horizontal, 20)
             
             Spacer()
-        .navigationBarTitle("", displayMode: .inline)
-        .navigationBarBackButtonHidden(false)
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarBackButtonHidden(false)
+        }
     }
 
     func performRegistration() {
+        guard !countySelected.isEmpty else {
+            errorMessage = "Please select a county."
+            return
+        }
+
         guard password == confirmPassword else {
             errorMessage = "Passwords do not match."
             return
         }
         
-        authManager.register(email: email, password: password, firstName: firstName, lastName: lastName, zipCode: zipCode) { success, errorMessage in
+        authManager.register(email: email, password: password, firstName: firstName, lastName: lastName, countySelected: countySelected) { success, errorMessage in
             DispatchQueue.main.async {
                 if success {
                     print("Registration successful")

@@ -120,7 +120,7 @@ class AuthenticationManager: ObservableObject {
         }
     }
     
-    func register(email: String, password: String, firstName: String, lastName: String, zipCode: String, completion: @escaping (Bool, String?) -> Void) {
+    func register(email: String, password: String, firstName: String, lastName: String, countySelected: String, completion: @escaping (Bool, String?) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
             if let error = error {
                 DispatchQueue.main.async {
@@ -142,7 +142,7 @@ class AuthenticationManager: ObservableObject {
                 "firstName": firstName,
                 "lastName": lastName,
                 "email": email,
-                "zipCode": zipCode
+                "countySelected": countySelected // This line is changed to store the selected county
             ]) { err in
                 DispatchQueue.main.async {
                     if let err = err {
