@@ -74,8 +74,9 @@ struct HomeView: View {
             }
             guard let document = documentSnapshot, document.exists,
                   let userData = document.data(),
+                  let userCounty = userData["county"] as? String,
                   let hiddenIds = userData["hiddenNotifications"] as? [String] else {
-                print("User document does not exist or missing hiddenNotifications field.")
+                print("User document does not exist or is missing required fields.")
                 return
             }
 
@@ -89,9 +90,18 @@ struct HomeView: View {
                         let notificationId = document.documentID
                         if self.hiddenNotificationIds.contains(notificationId) {
                             return nil
-                        } else {
-                            return self.mapDocumentToNotificationItem(document: document)
                         }
+
+                        guard let selectedCounties = document.data()["selectedCounties"] as? [String] else {
+                            print("Notification document \(notificationId) is missing the selectedCounties field.")
+                            return nil
+                        }
+
+                        if !selectedCounties.contains(userCounty) {
+                            return nil
+                        }
+
+                        return self.mapDocumentToNotificationItem(document: document)
                     }
                 } else {
                     print("No notifications fetched.")
@@ -99,6 +109,7 @@ struct HomeView: View {
             }
         }
     }
+
 
     private func mapDocumentToNotificationItem(document: QueryDocumentSnapshot) -> NotificationItem? {
         let data = document.data()
