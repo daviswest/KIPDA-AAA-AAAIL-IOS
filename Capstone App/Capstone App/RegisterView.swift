@@ -38,8 +38,13 @@ struct RegisterView: View {
                     
                     Picker(selection: $countySelected, label: Text(countySelected.isEmpty ? "Select County" : countySelected)) {
                         Text("Select County").tag("")
-                        Text("Jefferson").tag("Jefferson")
                         Text("Bullitt").tag("Bullitt")
+                        Text("Henry").tag("Henry")
+                        Text("Jefferson").tag("Jefferson")
+                        Text("Oldham").tag("Oldham")
+                        Text("Shelby").tag("Shelby")
+                        Text("Spencer").tag("Spencer")
+                        Text("Trimble").tag("Trimble")
                     }
                     .pickerStyle(MenuPickerStyle())
                     .frame(maxWidth: .infinity, maxHeight: 30)
