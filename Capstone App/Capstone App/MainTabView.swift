@@ -12,7 +12,7 @@ struct MainTabView: View {
             
             ServicesView()
                 .tabItem {
-                    Label("Resources", systemImage: "info.circle.fill")
+                    Label(NSLocalizedString("resources_tab_label", comment: "Title for the resources section"), systemImage: "info.circle.fill")
                 }
             
             SettingsView()

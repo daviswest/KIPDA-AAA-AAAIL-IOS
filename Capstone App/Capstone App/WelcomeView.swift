@@ -17,12 +17,12 @@ struct WelcomeView: View {
                     .frame(width: 200, height: 200)
                     .padding(.bottom, 10)
                 
-                Text(NSLocalizedString("welcome_message", comment: "Welcome message"))
+                Text(NSLocalizedString("welcome_message", comment: "Welcome to kipda notify"))
                     .font(.system(size: UIScreen.main.bounds.width * 0.05))
                     .fontWeight(.bold)
                     .padding(.bottom, 5)
                 
-                Text("Your Area Agency on Aging")
+                Text(NSLocalizedString("agency_message", comment: "Your agency area on aging"))
                     .font(.system(size: UIScreen.main.bounds.width * 0.04))
                     .padding(.bottom, 50)
                 

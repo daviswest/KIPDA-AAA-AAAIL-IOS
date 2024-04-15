@@ -1,6 +1,11 @@
 "language_message" = "Please select a language";
 "welcome_message" = "Welcome to KIPDA Notify";
+"agency_message" = "Your Area Agency on Aging";
 "login_button" = "Login";
 "register_button" = "Register";
 "change_language" = "Change Language";
 "continue_guest" = "Continue as Guest";
+
+
+
+"resources_tab_label" = "Resources"
