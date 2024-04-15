@@ -112,15 +112,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print("Notification will present in foreground")
-        completionHandler([.list, .banner, .sound])
+        let notificationsEnabled = UserDefaults.standard.bool(forKey: "notificationsEnabled")
+        if notificationsEnabled {
+            print("Notifications are enabled. Presenting notification in foreground.")
+            completionHandler([.list, .banner, .sound])
+        } else {
+            print("Notifications are disabled. Suppressing notification in foreground.")
+            completionHandler([])
+        }
     }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print("Notification received with user interaction")
 
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let notificationsEnabled = UserDefaults.standard.bool(forKey: "notificationsEnabled")
+        if notificationsEnabled {
+            print("Notifications are enabled. Handling interaction with notification.")
+        } else {
+            print("Notifications are disabled. Ignoring interaction with notification.")
+        }
         completionHandler()
     }
+
 }
 
 

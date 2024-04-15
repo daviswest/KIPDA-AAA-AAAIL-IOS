@@ -1,6 +1,6 @@
 import SwiftUI
-import Foundation
 import CoreLocation
+import UserNotifications
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private var locationManager = CLLocationManager()
@@ -11,6 +11,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        checkInitialLocationAuthorization()
     }
 
     func requestAuthorization() {
@@ -21,15 +22,17 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         switch locationManager.authorizationStatus {
         case .notDetermined:
             print("Authorization status: Not determined. Requesting permission...")
-            locationManager.requestWhenInUseAuthorization()
+            requestAuthorization()
         case .authorizedWhenInUse, .authorizedAlways:
             print("Authorization status: Authorized. Starting location updates...")
-            locationManager.requestWhenInUseAuthorization()
+            startLocationUpdates()
         default:
-            print("Authorization status: Default case. Requesting permission...")
-            locationManager.requestWhenInUseAuthorization()
-            break
+            print("Authorization status: Denied or Restricted.")
         }
+    }
+    
+    func checkInitialLocationAuthorization() {
+        notificationAuthorizationStatus = locationManager.authorizationStatus == .authorizedAlways || locationManager.authorizationStatus == .authorizedWhenInUse ? .authorized : .denied
     }
 
     func startLocationUpdates() {
@@ -41,117 +44,94 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkLocationAuthorization()
+        notificationAuthorizationStatus = manager.authorizationStatus == .authorizedAlways || manager.authorizationStatus == .authorizedWhenInUse ? .authorized : .denied
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         fetchZipCode(from: location)
-        stopLocationUpdates() // Optionally stop updates if you only need the initial location.
+        stopLocationUpdates()
     }
 
     func fetchZipCode(from location: CLLocation) {
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
-            guard let self = self, let placemark = placemarks?.first, error == nil else {
-                print("Failed to fetch zip code: \(error?.localizedDescription ?? "Unknown error")")
-                return
+            if let placemark = placemarks?.first {
+                self?.zipCode = placemark.postalCode
             }
-            self.zipCode = placemark.postalCode
         }
     }
-    
+
     func requestNotificationAuthorization() {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-                if let error = error {
-                    print("Failed to request notification authorization: \(error.localizedDescription)")
-                } else {
-                    self.notificationAuthorizationStatus = granted ? .authorized : .denied
-                    print("Notification authorization status: \(self.notificationAuthorizationStatus)")
-                }
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            DispatchQueue.main.async {
+                self.notificationAuthorizationStatus = granted ? .authorized : .denied
             }
         }
-}
-
-
-enum TextSize: String, CaseIterable, Identifiable {
-    case small = "Small"
-    case medium = "Medium"
-    case large = "Large"
-    case extraLarge = "Extra Large"
-
-    var id: String { self.rawValue }
+    }
 }
 
 struct SettingsView: View {
     @EnvironmentObject var authManager: AuthenticationManager
-    @StateObject private var locationManager = LocationManager() 
+    @StateObject private var locationManager = LocationManager()
     @State private var allowLocation = false
-
-    @State private var isLargeTextEnabled = false
-    @State private var selectedTextSize: TextSize = .medium
-    @State private var isVoiceOverEnabled = false
-    @State private var isHighContrastEnabled = false
-    @State private var dataSaveEnabled = false
     @State private var allowNotifications = false
-    
+
     var body: some View {
         NavigationView {
             VStack {
                 List {
-                    Section(header: Text("General Settings").fontWeight(.bold),
-                            footer: Text("General settings include preferences for app behavior.")) {
-                        Toggle("Enable Location Services", isOn: Binding<Bool>(
-                                                    get: { self.allowLocation },
-                                                    set: { newValue in
-                                                        self.allowLocation = newValue
-                                                        if newValue {
-                                                            self.locationManager.checkLocationAuthorization()
-                                                        } else {
-                                                            self.locationManager.stopLocationUpdates()
-                                                        }
-                                                    }
-                                                ))
-
-                        Toggle("Enable Notifications", isOn: Binding<Bool>(
-                            get: { self.allowNotifications },
-                            set: { newValue in
-                                self.allowNotifications = newValue
+                    Section(header: Text("General Settings").fontWeight(.bold)) {
+                        Toggle("Enable Location Services", isOn: $allowLocation)
+                            .onChange(of: allowLocation) { newValue in
                                 if newValue {
-                                    self.locationManager.requestNotificationAuthorization()
+                                    locationManager.requestAuthorization()
                                 } else {
+                                    locationManager.stopLocationUpdates()
                                 }
                             }
-                        ))
 
+                        Toggle("Enable Notifications", isOn: $allowNotifications)
+                            .onChange(of: allowNotifications) { newValue in
+                                UserDefaults.standard.set(newValue, forKey: "notificationsEnabled")
+                                if newValue {
+                                    locationManager.requestNotificationAuthorization()
+                                } else {
+                                    UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+                                }
+                            }
                     }
-                    Section(header: Text("Account").fontWeight(.bold),
-                            footer: Text("Manage your account settings.")) {
-                        NavigationLink(destination: ProfileView().environmentObject(authManager)) {
+                    Section(header: Text("Account").fontWeight(.bold)) {
+                        NavigationLink(destination: Text("Profile View")) {
                             Text("Edit Profile")
                         }
-                        NavigationLink(destination: ChangePasswordView().environmentObject(authManager)) {
+                        NavigationLink(destination: Text("Change Password View")) {
                             Text("Change Password")
                         }
                     }
                 }
                 .listStyle(GroupedListStyle())
                 
-                Button(action: {
+                Button("SIGN OUT") {
                     authManager.signOut()
-                }) {
-                    Text("SIGN OUT")
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .background(Color.red)
-                        .cornerRadius(10)
                 }
+                .foregroundColor(.white)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color.red)
+                .cornerRadius(10)
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
             }
             .navigationBarTitle("Settings")
-            .scrollContentBackground(.hidden)
+            .onAppear {
+                allowLocation = locationManager.notificationAuthorizationStatus == .authorized
+                UNUserNotificationCenter.current().getNotificationSettings { settings in
+                    DispatchQueue.main.async {
+                        allowNotifications = settings.authorizationStatus == .authorized
+                    }
+                }
+            }
         }
     }
 }
