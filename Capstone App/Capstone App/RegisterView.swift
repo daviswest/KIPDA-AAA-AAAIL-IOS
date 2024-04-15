@@ -9,7 +9,7 @@ struct RegisterView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
-    @State private var countySelected: String = ""
+    @State private var county: String = ""
     @State private var errorMessage: String?
 
     var body: some View {
@@ -36,7 +36,7 @@ struct RegisterView: View {
                     PasswordField(placeholder: "Password", password: $password)
                     PasswordField(placeholder: "Confirm Password", password: $confirmPassword)
                     
-                    Picker(selection: $countySelected, label: Text(countySelected.isEmpty ? "Select County" : countySelected)) {
+                    Picker(selection: $county, label: Text(county.isEmpty ? "Select County" : county)) {
                         Text("Select County").tag("")
                         Text("Bullitt").tag("Bullitt")
                         Text("Henry").tag("Henry")
@@ -84,7 +84,7 @@ struct RegisterView: View {
     }
 
     func performRegistration() {
-        guard !countySelected.isEmpty else {
+        guard !county.isEmpty else {
             errorMessage = "Please select a county."
             return
         }
@@ -94,7 +94,7 @@ struct RegisterView: View {
             return
         }
         
-        authManager.register(email: email, password: password, firstName: firstName, lastName: lastName, countySelected: countySelected) { success, errorMessage in
+        authManager.register(email: email, password: password, firstName: firstName, lastName: lastName, county: county) { success, errorMessage in
             DispatchQueue.main.async {
                 if success {
                     print("Registration successful")

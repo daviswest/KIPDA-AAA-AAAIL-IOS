@@ -72,43 +72,56 @@ struct HomeView: View {
                 print("Error fetching user data: \(error.localizedDescription)")
                 return
             }
-            guard let document = documentSnapshot, document.exists,
-                  let userData = document.data(),
-                  let userCounty = userData["county"] as? String,
-                  let hiddenIds = userData["hiddenNotifications"] as? [String] else {
-                print("User document does not exist or is missing required fields.")
-                return
-            }
+            
+            if let document = documentSnapshot, document.exists {
+                let userData = document.data() ?? [:]
+                let userCounty = userData["county"] as? String ?? ""
 
-            self.hiddenNotificationIds = Set(hiddenIds)
-
-            db.collection("notifications").order(by: "date", descending: true).getDocuments { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                } else if let documents = querySnapshot?.documents, !documents.isEmpty {
-                    self.notifications = documents.compactMap { document -> NotificationItem? in
-                        let notificationId = document.documentID
-                        if self.hiddenNotificationIds.contains(notificationId) {
-                            return nil
-                        }
-
-                        guard let selectedCounties = document.data()["selectedCounties"] as? [String] else {
-                            print("Notification document \(notificationId) is missing the selectedCounties field.")
-                            return nil
-                        }
-
-                        if !selectedCounties.contains(userCounty) {
-                            return nil
-                        }
-
-                        return self.mapDocumentToNotificationItem(document: document)
-                    }
+                if let hiddenIds = userData["hiddenNotifications"] as? [String] {
+                    self.hiddenNotificationIds = Set(hiddenIds)
                 } else {
-                    print("No notifications fetched.")
+
+                    userRef.setData(["hiddenNotifications": []], merge: true) { error in
+                        if let error = error {
+                            print("Error initializing hiddenNotifications: \(error.localizedDescription)")
+                        } else {
+                            print("hiddenNotifications initialized successfully.")
+                        }
+                    }
+                    self.hiddenNotificationIds = Set()
                 }
+
+                self.fetchAndFilterNotifications(userCounty: userCounty)
+            } else {
+                print("User document does not exist or is missing required fields.")
             }
         }
     }
+
+    private func fetchAndFilterNotifications(userCounty: String) {
+        let db = Firestore.firestore()
+        db.collection("notifications").order(by: "date", descending: true).getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else if let documents = querySnapshot?.documents, !documents.isEmpty {
+                self.notifications = documents.compactMap { document -> NotificationItem? in
+                    let notificationId = document.documentID
+                    if self.hiddenNotificationIds.contains(notificationId) {
+                        return nil
+                    }
+                    
+                    guard let selectedCounties = document.data()["selectedCounties"] as? [String], selectedCounties.contains(userCounty) else {
+                        return nil
+                    }
+                    
+                    return self.mapDocumentToNotificationItem(document: document)
+                }
+            } else {
+                print("No notifications fetched.")
+            }
+        }
+    }
+
 
 
     private func mapDocumentToNotificationItem(document: QueryDocumentSnapshot) -> NotificationItem? {
