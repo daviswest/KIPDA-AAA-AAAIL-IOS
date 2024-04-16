@@ -102,10 +102,10 @@ struct SettingsView: View {
                             }
                     }
                     Section(header: Text("Account").fontWeight(.bold)) {
-                        NavigationLink(destination: Text("Profile View")) {
+                        NavigationLink(destination: ProfileView().environmentObject(authManager)) {
                             Text("Edit Profile")
                         }
-                        NavigationLink(destination: Text("Change Password View")) {
+                        NavigationLink(destination: ChangePasswordView().environmentObject(authManager)) {
                             Text("Change Password")
                         }
                     }

@@ -49,10 +49,9 @@ struct ProfileView: View {
                     .background(Color(.systemGray6))
                     .cornerRadius(10)
                 }
-                .padding()
             }
             .padding(.horizontal, 20)
-            .padding(.top, 20)
+            .padding(.top, 10)
 
             Button(action: {
                 showConfirmationDialog = true
