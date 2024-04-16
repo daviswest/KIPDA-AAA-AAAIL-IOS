@@ -90,7 +90,7 @@ struct SettingsView: View {
                                     locationManager.stopLocationUpdates()
                                 }
                             }
-
+                        
                         Toggle("Enable Notifications", isOn: $allowNotifications)
                             .onChange(of: allowNotifications) { newValue in
                                 UserDefaults.standard.set(newValue, forKey: "notificationsEnabled")
@@ -103,13 +103,17 @@ struct SettingsView: View {
                     }
                     Section(header: Text("Account").fontWeight(.bold)) {
                         NavigationLink(destination: Text("Profile View")) {
-                            Text("Edit Profile")
-                        }
-                        NavigationLink(destination: Text("Change Password View")) {
-                            Text("Change Password")
-                        }
-                    }
-                }
+                            Section(header: Text("Account").fontWeight(.bold),
+                                    footer: Text("Manage your account settings.")) {
+                                NavigationLink(destination: ProfileView().environmentObject(authManager)) {
+                                    Text("Edit Profile")
+                                }
+                                NavigationLink(destination: Text("Change Password View")) {
+                                    NavigationLink(destination: ChangePasswordView().environmentObject(authManager)) {
+                                        Text("Change Password")
+                                    }
+                                }
+                            }}}}
                 .listStyle(GroupedListStyle())
                 
                 Button("SIGN OUT") {
