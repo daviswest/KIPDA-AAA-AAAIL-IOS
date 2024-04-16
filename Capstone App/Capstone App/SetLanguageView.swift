@@ -15,6 +15,7 @@ struct SetLanguageView: View {
                     Text("English").tag("en")
                     Text("Somali").tag("so")
                     Text("Arabic").tag("ar")
+                    Text("Persian").tag("fa")
                 }
                 .pickerStyle(WheelPickerStyle())
                 .padding()
