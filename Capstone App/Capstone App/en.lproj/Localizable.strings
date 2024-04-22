@@ -7,5 +7,6 @@
 "continue_guest" = "Continue as Guest";
 
 
-
+"home_tab_label" = "Home";
 "resources_tab_label" = "Resources";
+"settings_tab_label" = "Settings";

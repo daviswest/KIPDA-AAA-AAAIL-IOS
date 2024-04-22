@@ -123,7 +123,7 @@ struct SettingsView: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
             }
-            .navigationBarTitle("Settings")
+            .navigationBarTitle(NSLocalizedString("settings_tab_label", comment: "Title for the settings section"))
             .onAppear {
                 allowLocation = locationManager.notificationAuthorizationStatus == .authorized
                 UNUserNotificationCenter.current().getNotificationSettings { settings in

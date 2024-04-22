@@ -1,11 +1,12 @@
 "language_message" = "زبان مورد نطر خود را انتخاب کنید";
 "welcome_message" = "به KIPDA Notify خوش آمدید";
-"agency_message" = "آژانس منطقه ای سالمندی";
+"agency_message" = "آژانس منطقه ای سالخوردگی";
 "login_button" = "ورود";
 "register_button" = "ثبت نام";
 "change_language" = "تغییر زبان";
 "continue_guest" = "ادامه به صورت مهمان";
 
 
-
+"home_tab_label" = "خانه";
 "resources_tab_label" = "منابع";
+"settings_tab_label" = "تنظیمات";

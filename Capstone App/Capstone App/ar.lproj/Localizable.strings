@@ -1,6 +1,8 @@
 "language_message" = "يرجى تحديد لغة";
-"welcome_message" = "مرحبا بك في KIPDA إعلام";
+"welcome_message" = "مرحبا بك في KIPDA Notify";
 "login_button" = "تسجيل الدخول";
 "register_button" = "تسجيل";
-"change_language" = "غير اللغة";
+"change_language" = "تغيير اللغة";
 "continue_guest" = "الاستمرار كضيف";
+
+"settings_tab_label" = "الإعدادات";

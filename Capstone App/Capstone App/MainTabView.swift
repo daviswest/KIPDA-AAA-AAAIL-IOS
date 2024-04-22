@@ -7,7 +7,7 @@ struct MainTabView: View {
         TabView {
             HomeView()
                 .tabItem {
-                    Label("Home", systemImage: "house.fill")
+                    Label(NSLocalizedString("home_tab_label", comment: "Title for the home section"), systemImage: "house.fill")
                 }
             
             ServicesView()
@@ -17,7 +17,7 @@ struct MainTabView: View {
             
             SettingsView()
                 .tabItem {
-                    Label("Settings", systemImage: "gearshape.fill")
+                    Label(NSLocalizedString("settings_tab_label", comment: "Title for the settings section"), systemImage: "gearshape.fill")
                 }
             
             if authManager.isAdmin {
