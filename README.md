@@ -59,9 +59,9 @@ open KIPDA-AAA-AAAIL-IOS.xcworkspace
 
 ## Contributors
 This project was developed as part of a **senior capstone project** by:
-**[Davis West, Saam Dejbani, Baraka Mulungula, Noureldin Abdelaziz, Jonathan Vessels]**
+**Davis West, Saam Dejbani, Baraka Mulungula, Noureldin Abdelaziz, Jonathan Vessels**
 
-🚀 Special thanks to **Kentuckiana Planning and Development Agency (KIPDA)** for their collaboration and guidance.
+Special thanks to **Kentuckiana Planning and Development Agency (KIPDA)** for their collaboration and guidance.
 
 ## Security & API Keys
 The API keys and Firebase configuration are **not included** in this repository for security reasons. Please refer to the **Firebase Setup** section above to configure your own credentials. Contact [davis.west20@gmail.com](mailto:davis.west20@gmail.com) for future database access.
